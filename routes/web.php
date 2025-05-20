@@ -28,7 +28,18 @@ Route::get('/pesan', function () {
     return view('pages.order'); // Pastikan file `order.blade.php` ada
 })->name('order');
 
+Route::prefix('admin')->group(function () {
+    Route::get('/login', [AdminController::class, 'showLoginForm'])->name('admin.login');
+    Route::post('/login', [AdminController::class, 'login']);
 
+    Route::get('/register', [AdminController::class, 'showRegisterForm'])->name('admin.register');
+    Route::post('/register', [AdminController::class, 'register']);
+
+    Route::middleware('auth:admin')->group(function () {
+        Route::get('/dashboard', [AdminController::class, 'dashboard'])->name('admin.dashboard');
+        Route::post('/logout', [AdminController::class, 'logout'])->name('admin.logout');
+    });
+});
 
 Route::prefix('/admin')->namespace('App\Http\Controllers\Admin')->group(function(){
 Route::match(['get', 'post'], 'dashboard',[AdminController::class,'dashboard']);

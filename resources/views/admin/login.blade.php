@@ -61,6 +61,7 @@
       max-width: 200px;
       color: #fff;
       margin: 0 auto;
+      cursor: pointer;
     }
 
     .btn-primary:hover {
@@ -95,12 +96,21 @@
     .input-group i {
       color: #555;
     }
+
+    .alert {
+      padding: 10px;
+      background-color: #ffdddd;
+      color: #a94442;
+      margin-bottom: 15px;
+      border-radius: 4px;
+      font-size: 14px;
+    }
   </style>
 
   <!-- Google Font: Source Sans Pro -->
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
   <!-- Font Awesome -->
-  <link rel="stylesheet" href="{{asset('admin/plugins/fontawesome-free/css/all.min.css') }}">
+  <link rel="stylesheet" href="{{ asset('admin/plugins/fontawesome-free/css/all.min.css') }}">
 </head>
 <body>
   <div class="login-box">
@@ -111,20 +121,39 @@
 
     <p class="login-box-msg">Login</p>
 
-    <form action="../../index3.html" method="post">
+    {{-- Tampilkan error jika ada --}}
+    @if ($errors->any())
+      <div class="alert">
+        <ul style="list-style: none; padding: 0; margin: 0;">
+          @foreach ($errors->all() as $error)
+            <li>{{ $error }}</li>
+          @endforeach
+        </ul>
+      </div>
+    @endif
+
+    {{-- Tampilkan pesan logout atau lainnya --}}
+    @if (session('success'))
+      <div class="alert" style="background-color: #ddffdd; color: #3c763d;">
+        {{ session('success') }}
+      </div>
+    @endif
+
+    <form action="/admin/login" method="post">
+      @csrf
       <div class="input-group">
-        <input type="email" class="form-control" placeholder="Email address">
+        <input type="email" class="form-control" name="email" placeholder="Email address" required>
         <div class="input-group-text"></div>
       </div>
       <div class="input-group">
-        <input type="password" class="form-control" placeholder="Password">
+        <input type="password" class="form-control" name="password" placeholder="Password" required>
         <div class="input-group-text"></div>
       </div>
       <button type="submit" class="btn btn-primary">Log in</button>
     </form>
 
     <div class="text-signup">
-      Don't have an account? <a href="register.html">Sign Up</a>
+      Don't have an account? <a href="/admin/register">Sign Up</a>
     </div>
   </div>
 </body>
