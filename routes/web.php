@@ -40,16 +40,6 @@ Route::post('/order', function (\Illuminate\Http\Request $request) {
         'address' => 'required|string',
     ]);
 
-    // Simpan ke database (contoh sederhana, sesuaikan dengan model)
-    \DB::table('orders')->insert([
-        'qty_3kg' => $request->qty_3kg,
-        'qty_12kg' => $request->qty_12kg,
-        'payment_method' => $request->payment_method,
-        'address' => $request->address,
-        'created_at' => now(),
-        'updated_at' => now(),
-    ]);
-
     return redirect()->route('order')->with('success', 'Pesanan berhasil dibuat!');
 })->name('order.store');
 
