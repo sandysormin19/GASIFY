@@ -81,6 +81,20 @@
       color: #1a8b4c;
       text-decoration: none;
     }
+
+    .alert {
+      padding: 10px;
+      background-color: #ffdddd;
+      color: #a94442;
+      margin-bottom: 15px;
+      border-radius: 4px;
+      font-size: 14px;
+    }
+
+    .alert-success {
+      background-color: #ddffdd;
+      color: #3c763d;
+    }
   </style>
 
   <!-- Google Font: Source Sans Pro -->
@@ -95,16 +109,36 @@
 
     <p class="signup-box-msg">Sign Up</p>
 
-    <form action="/register" method="post">
-      <input type="text" class="form-control" placeholder="Name" name="name" required>
-      <input type="email" class="form-control" placeholder="Email address" name="email" required>
+    {{-- Tampilkan pesan sukses --}}
+    @if(session('success'))
+      <div class="alert alert-success">
+        {{ session('success') }}
+      </div>
+    @endif
+
+    {{-- Tampilkan error validasi --}}
+    @if($errors->any())
+      <div class="alert">
+        <ul style="list-style: none; padding: 0; margin: 0;">
+          @foreach($errors->all() as $error)
+            <li>{{ $error }}</li>
+          @endforeach
+        </ul>
+      </div>
+    @endif
+
+    <form action="{{route('user.register')}}" method="post">
+      @csrf
+      <input type="text" class="form-control" placeholder="Name" name="name" value="{{ old('name') }}" required>
+      <input type="email" class="form-control" placeholder="Email address" name="email" value="{{ old('email') }}" required>
       <input type="password" class="form-control" placeholder="Password" name="password" required>
+      <input type="password" class="form-control" placeholder="Confirm Password" name="password_confirmation" required>
 
       <button type="submit" class="btn-signup">Sign Up</button>
     </form>
 
     <div class="text-login">
-      Already have an account? <a href="/login">Login</a>
+      Already have an account? <a href="{{ route('login')}}">Login</a>
     </div>
   </div>
 </body>

@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\AdminController;
+use App\Http\Controllers\UserController;
 
 // Halaman Utama
 Route::get('/', function () {
@@ -18,10 +19,7 @@ Route::get('/cara-kerja', function () {
     return view('pages.cara-kerja');
 })->name('cara-kerja');
 
-// Halaman Login
-Route::get('/login', function () {
-    return view('auth.login');
-})->name('login');
+
 
 Route::get('/register', function () {
     return view('auth.register');
@@ -31,11 +29,6 @@ Route::get('/order', function () {
     return view('pages.order');
 })->name('order');
 
-<<<<<<< HEAD
-Route::prefix('admin')->group(function () {
-    Route::get('/login', [AdminController::class, 'showLoginForm'])->name('admin.login');
-    Route::post('/login', [AdminController::class, 'login']);
-=======
 Route::post('/order', function (\Illuminate\Http\Request $request) {
     // Validasi dan simpan pesanan
     $request->validate([
@@ -48,16 +41,23 @@ Route::post('/order', function (\Illuminate\Http\Request $request) {
     return redirect()->route('order')->with('success', 'Pesanan berhasil dibuat!');
 })->name('order.store');
 
->>>>>>> 395c29333a6ebae1f5f03f1b4ccac57813937058
+    //User register route
+    Route::get('/register', [UserController::class, 'showRegisterForm'])->name('user.register');
+    Route::post('/register', [UserController::class, 'register'])->name('user.register.submit');
 
-    Route::get('/register', [AdminController::class, 'showRegisterForm'])->name('admin.register');
-    Route::post('/register', [AdminController::class, 'register']);
-
-    Route::middleware('auth:admin')->group(function () {
-        Route::get('/dashboard', [AdminController::class, 'dashboard'])->name('admin.dashboard');
-        Route::post('/logout', [AdminController::class, 'logout'])->name('admin.logout');
+    //Dashboard user setelah login
+    Route::middleware('auth')->group(function () {
+        Route::get('/dashboard', [UserController::class, 'dashboard'])->name('user.dashboard');
+        Route::post('/logout', [UserController::class, 'logout'])->name('user.logout');
     });
-});
+
+
+// Tampilkan form login
+Route::get('/login', [UserController::class, 'showLoginForm'])->name('login');
+
+// Proses login
+Route::post('/login', [UserController::class, 'login'])->name('user.login.submit');
+
 
 Route::prefix('/admin')->namespace('App\Http\Controllers\Admin')->group(function(){
 Route::match(['get', 'post'], 'dashboard',[AdminController::class,'dashboard']);
