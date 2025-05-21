@@ -10,7 +10,7 @@
             <p style="margin: 1rem 0; font-size: 1.2rem;">
                 Dapatkan gas LPG diantar langsung ke rumah Anda dengan cepat dan terpercaya.
             </p>
-            <a href="{{ route('order') }}" style="display: inline-block; background-color: #008000; color: #fff; padding: 0.75rem 1.5rem; border-radius: 8px; text-decoration: none;">
+            <a href="{{ route('order.create') }}" style="display: inline-block; background-color: #008000; color: #fff; padding: 0.75rem 1.5rem; border-radius: 8px; text-decoration: none;">
                 Pesan Sekarang
             </a>
         </div>
