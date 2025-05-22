@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use App\Models\Admin;
 use App\Models\Stock;
+use App\Models\AdminLogin;
 
 class AdminController extends Controller
 {
@@ -23,6 +24,13 @@ class AdminController extends Controller
             if ($admin && Hash::check($request->password, $admin->password)) {
                 // Set session manual
                 session(['is_admin' => true, 'admin_id' => $admin->_id, 'admin_name' => $admin->name]);
+                AdminLogin::create([
+                    'admin_id'   => $admin->_id,
+                    'admin_name' => $admin->name,
+                    'email'      => $admin->email,
+                    'ip_address' => $request->ip(),
+                    'login_at'   => now(),
+                ]);
                 return redirect('/admin/stok');
             }
 
@@ -32,26 +40,25 @@ class AdminController extends Controller
         return view('admin.login');
     }
 
-    public function register(Request $request)
-    {
-        if ($request->isMethod('post')) {
-            $request->validate([
-                'name' => 'required|string|max:255',
-                'email' => 'required|email|unique:admins,email',
-                'password' => 'required|string|min:6|confirmed',
-            ]);
+   // public function register(Request $request)
+  //  {
+ //    if ($request->isMethod('post')) {
+//      $request->validate([
+//        'name' => 'required|string|max:255',
+ //      'email' => 'required|email|unique:admins,email',
+   //    'password' => 'required|string|min:6|confirmed',
+  // ]);
+ // Admin::create([
+//   'name' => $request->name,
+// 'email' => $request->email,
+ //'password' => Hash::make($request->password),
+//]);
 
-            Admin::create([
-                'name' => $request->name,
-                'email' => $request->email,
-                'password' => Hash::make($request->password),
-            ]);
+      //      return redirect('/admin/login')->with('success', 'Akun admin berhasil dibuat.');
+      //  }
 
-            return redirect('/admin/login')->with('success', 'Akun admin berhasil dibuat.');
-        }
-
-        return view('admin.register');
-    }
+    //    return view('admin.register');
+  //  }
 
     public function logout(Request $request)
     {

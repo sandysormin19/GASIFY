@@ -46,6 +46,13 @@ class UserController extends Controller
 
         if (Auth::attempt($credentials)) {
             $request->session()->regenerate();
+            \App\Models\UserLogin::create([
+                'user_id' => Auth::id(),
+                'email' => Auth::user()->email,
+                'ip_address' => $request->ip(),
+                'logged_in_at' => now(),
+            ]);
+
             return redirect()->route('home');
         }
 
