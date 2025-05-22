@@ -37,8 +37,13 @@ Route::middleware('auth')->group(function () {
 });
 
 // Admin Routes
-Route::prefix('/admin')->namespace('App\Http\Controllers\Admin')->group(function(){
+Route::prefix('/admin')->group(function(){
     Route::match(['get', 'post'], 'dashboard',[AdminController::class,'dashboard']);
     Route::match(['get', 'post'], 'login',[AdminController::class,'login']);
     Route::match(['get', 'post'], 'register',[AdminController::class,'register']);
 });
+
+// Admin stok tanpa login (tidak disarankan kecuali memang ingin publik)
+Route::get('/admin/stok', [AdminController::class, 'stok'])->name('admin.stok');
+Route::post('/admin/stok/update', [AdminController::class, 'updateStok'])->name('admin.stok.update');
+
