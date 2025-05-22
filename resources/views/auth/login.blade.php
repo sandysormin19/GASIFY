@@ -122,11 +122,11 @@
         @csrf
       <div class="input-group">
         <input type="email" class="form-control" name ="email" placeholder="Email address"required value="{{ old('email') }}">
-        <div class="input-group-text"><i class="fas fa-envelope"></i></div>
+        <div class="input-group-text"></div>
       </div>
       <div class="input-group">
         <input type="password" class="form-control" name="password" placeholder="Password" required>
-        <div class="input-group-text"><i class="fas fa-lock"></i></div>
+        <div class="input-group-text"></div>
       </div>
       <button type="submit" class="btn btn-primary">Log in</button>
     </form>
