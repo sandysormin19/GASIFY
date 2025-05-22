@@ -23,10 +23,24 @@
                 <li class="nav-item">
                     <a class="nav-link" href="{{ route('cara-kerja') }}">Cara Kerja</a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{{ route('login') }}">Login</a>
-                </li>
-            </ul>
+
+                @auth
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ route('user.profile') }}">{{ Auth::user()->name }}</a>
+                    </li>
+                    <li class="nav-item">
+                        <form action="{{ route('user.logout') }}" method="POST" style="display:inline;">
+                            @csrf
+                            <button type="submit" class="nav-link btn btn-link" style="display:inline; cursor:pointer;">Logout</button>
+                        </form>
+                    </li>
+                @else
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ route('login') }}">Login</a>
+                    </li>
+                @endauth
+</ul>
+
         </div>
     </div>
 </nav>
