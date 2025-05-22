@@ -2,7 +2,7 @@
     <div class="container">
         <!-- Logo -->
         <a class="navbar-brand" href="{{ url('/') }}">
-            <img src="{{ asset('admin/images/Home/gasifylogo.jpg') }}" alt="Gasify Logo" style="height: 40px;">
+            <img src="{{ asset('admin/images/Home/logogasify.png') }}" alt="Gasify Logo" style="height: 80px;">
         </a>
 
         <!-- Toggle button for mobile -->
