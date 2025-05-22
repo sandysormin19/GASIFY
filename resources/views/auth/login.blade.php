@@ -4,71 +4,97 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Gasify | Login</title>
+
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="{{ asset('admin/plugins/fontawesome-free/css/all.min.css') }}">
+
   <style>
     body {
-      font-family: 'Source Sans Pro', sans-serif;
       margin: 0;
-      padding: 0;
-      background-color: #fff;
+      font-family: 'Poppins', sans-serif;
+      background: linear-gradient(135deg, #d9fbe7, #b2dfdb);
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
     }
 
     .login-box {
+      background-color: #ffffff;
+      border-radius: 20px;
+      padding: 60px 40px 50px;
+      box-shadow: 0 12px 35px rgba(0, 0, 0, 0.08);
       width: 100%;
-      max-width: 400px;
-      margin: 40px auto;
-      padding: 20px;
+      max-width: 370px;
       text-align: center;
+      animation: fadeIn 1s ease-in-out;
+      position: relative;
+    }
+
+    .login-logo {
+      margin-bottom: 10px;
+      margin-left: 63px;
+      margin-right: 10px;
     }
 
     .login-logo img {
-      width: 80px;
-      margin-bottom: 10px;
-    }
-
-    .login-logo .brand {
-      font-size: 2rem;
-      color: #1a8b4c;
-      font-weight: bold;
+      width: 230px; /* Ubah ukuran logo di sini */
+      height: auto;
+      display: block;
+      margin-left: 400px;  /* Bisa kamu ubah untuk sesuaikan posisi kiri */
+      margin-right: 200px; /* Bisa kamu ubah untuk sesuaikan posisi kanan */
     }
 
     .login-box-msg {
-      font-size: 1.5rem;
-      font-weight: bold;
-      margin-bottom: 1.5rem;
+      font-size: 1.3rem;
+      font-weight: 600;
+      color: #333;
+      margin-bottom: 1.8rem;
     }
 
-    .form-control {
-      background-color: #fff0f0;
-      border: none;
-      border-radius: 5px;
-      height: 45px;
-      width: 100%;
+    .input-group {
+      display: flex;
+      align-items: center;
+      background-color: #f1f8f6;
+      border-radius: 10px;
       margin-bottom: 1rem;
-      padding-left: 10px;
+      padding: 0.6rem 0.9rem;
     }
 
-    .form-control:focus {
+    .input-group i {
+      margin-right: 12px;
+      color: #1a8b4c;
+      font-size: 1.1rem;
+    }
+
+    .input-group input {
+      border: none;
+      background: transparent;
+      width: 100%;
       outline: none;
-      box-shadow: none;
+      font-size: 1rem;
+      color: #333;
     }
 
     .btn-primary {
       background-color: #1a8b4c;
       border: none;
-      font-weight: bold;
-      height: 45px;
-      width: 100%;
-      max-width: 200px;
+      font-weight: 600;
+      padding: 0.9rem;
+      border-radius: 10px;
       color: #fff;
-      margin: 0 auto;
+      font-size: 1rem;
+      width: 100%;
+      margin-top: 10px;
+      transition: background 0.3s ease;
     }
 
     .btn-primary:hover {
-      background-color: #146a3b;
+      background-color: #156e3e;
     }
 
     .text-signup {
-      text-align: center;
       margin-top: 1.5rem;
       font-size: 14px;
     }
@@ -79,60 +105,50 @@
       text-decoration: none;
     }
 
-    .input-group {
-      display: flex;
-      align-items: center;
+    .error-message {
+      color: red;
+      font-size: 0.95rem;
       margin-bottom: 1rem;
     }
 
-    .input-group .input-group-text {
-      background: none;
-      border: none;
-      padding-left: 5px;
-      padding-right: 5px;
-    }
-
-    .input-group i {
-      color: #555;
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(-20px); }
+      to { opacity: 1; transform: translateY(0); }
     }
   </style>
-
-  <!-- Google Font: Source Sans Pro -->
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
-  <!-- Font Awesome -->
-  <link rel="stylesheet" href="{{asset('admin/plugins/fontawesome-free/css/all.min.css') }}">
 </head>
 <body>
   <div class="login-box">
     <div class="login-logo">
-      <img src="your-logo.png" alt="Gasify logo"> <!-- Ganti dengan path logo kamu -->
-      <div class="brand">Gasify</div>
+      <img src="{{ asset('admin/images/Home/logogasify.png') }}" alt="Gasify Logo"
+           style="margin-left: auto; margin-right: auto;"> <!-- Bisa edit margin manual di sini -->
     </div>
 
-    <p class="login-box-msg">Login</p>
+    <p class="login-box-msg">Masuk ke akun Anda</p>
 
     @if ($errors->any())
-    <div style="color:red; margin-bottom: 1rem;">
+      <div class="error-message">
         {{ $errors->first() }}
-    </div>
-@endif
-
+      </div>
+    @endif
 
     <form method="POST" action="{{ route('user.login.submit') }}">
-        @csrf
+      @csrf
       <div class="input-group">
-        <input type="email" class="form-control" name ="email" placeholder="Email address"required value="{{ old('email') }}">
-        <div class="input-group-text"></div>
+        <i class="fas fa-envelope"></i>
+        <input type="email" name="email" placeholder="Email address" required value="{{ old('email') }}">
       </div>
+
       <div class="input-group">
-        <input type="password" class="form-control" name="password" placeholder="Password" required>
-        <div class="input-group-text"></div>
+        <i class="fas fa-lock"></i>
+        <input type="password" name="password" placeholder="Password" required>
       </div>
-      <button type="submit" class="btn btn-primary">Log in</button>
+
+      <button type="submit" class="btn-primary">Masuk</button>
     </form>
 
     <div class="text-signup">
-      Don't have an account? <a href="{{ route('user.register') }}">Sign Up</a>
+      Belum punya akun? <a href="{{ route('user.register') }}">Daftar di sini</a>
     </div>
   </div>
 </body>
