@@ -27,9 +27,7 @@
             <div class="col-md-3">
                 <h6 class="fw-semibold">Ikuti Kami</h6>
                 <div class="d-flex gap-3 fs-4">
-                    <a href="#" class="text-white"><i class="fab fa-facebook-f"></i></a>
-                    <a href="#" class="text-white"><i class="fab fa-twitter"></i></a>
-                    <a href="#" class="text-white"><i class="fab fa-instagram"></i></a>
+                    <a href="https://taplink.cc/gasify.gg" class="text-white"><i class="fab fa-whatsapp"></i></a>
                 </div>
             </div>
         </div>
