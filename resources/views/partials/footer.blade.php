@@ -1,26 +1,44 @@
-<footer class="bg-success text-white py-4 mt-5">
-    <div class="container d-flex flex-wrap justify-content-between">
-        <div>
-            <h5>Gasify</h5>
-            <p class="mb-0">&copy; 2039 Gasify</p>
-        </div>
-        <div>
-            <h6>Kontak</h6>
-            <ul class="list-unstyled">
-                <li><a href="#" class="text-white text-decoration-none">Tentang</a></li>
-            </ul>
-        </div>
-        <div>
-            <h6>Tentang</h6>
-            <ul class="list-unstyled">
-                <li><a href="#" class="text-white text-decoration-none">Cara Kerja</a></li>
-            </ul>
-        </div>
-        <div>
-            <h6>Sosial</h6>
-            <a href="#" class="text-white me-2"><i class="fab fa-facebook"></i></a>
-            <a href="#" class="text-white me-2"><i class="fab fa-twitter"></i></a>
-            <a href="#" class="text-white"><i class="fab fa-instagram"></i></a>
+<footer class="bg-success text-white pt-5 pb-4 mt-5">
+    <div class="container">
+        <div class="row g-4">
+            <!-- Brand -->
+            <div class="col-md-4">
+                <h4 class="fw-bold">Gasify</h4>
+                <p>&copy; 2025 Gasify. Semua hak dilindungi.</p>
+            </div>
+
+            <!-- Navigasi -->
+            <div class="col-md-2">
+                <h6 class="fw-semibold">Navigasi</h6>
+                <ul class="list-unstyled">
+                    <li><a href="#" class="text-white text-decoration-none hover-link">Tentang</a></li>
+                    <li><a href="#" class="text-white text-decoration-none hover-link">Cara Kerja</a></li>
+                </ul>
+            </div>
+
+            <!-- Kontak -->
+            <div class="col-md-3">
+                <h6 class="fw-semibold">Hubungi Kami</h6>
+                <p class="mb-1">Email: Gasify@gmail.com</p>
+                <p>Telepon: +62 811-8183-317</p>
+            </div>
+
+            <!-- Sosial Media -->
+            <div class="col-md-3">
+                <h6 class="fw-semibold">Ikuti Kami</h6>
+                <div class="d-flex gap-3 fs-4">
+                    <a href="#" class="text-white"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#" class="text-white"><i class="fab fa-twitter"></i></a>
+                    <a href="#" class="text-white"><i class="fab fa-instagram"></i></a>
+                </div>
+            </div>
         </div>
     </div>
 </footer>
+
+<style>
+    .hover-link:hover {
+        text-decoration: underline;
+        color: #d4f2d2 !important;
+}
+</style>

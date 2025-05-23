@@ -4,66 +4,78 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Gasify | Sign Up</title>
+
+  <!-- Google Font -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="{{ asset('admin/plugins/fontawesome-free/css/all.min.css') }}">
+
   <style>
     body {
-      font-family: 'Source Sans Pro', sans-serif;
+      font-family: 'Poppins', sans-serif;
       margin: 0;
       padding: 0;
-      background-color: #fff;
+      background: linear-gradient(135deg, #d9fbe7, #b2dfdb);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
     }
 
     .signup-box {
+      background-color: #ffffff;
+      border-radius: 20px;
+      padding: 40px 30px;
       width: 100%;
-      max-width: 400px;
-      margin: 40px auto;
-      padding: 20px;
+      max-width: 420px;
       text-align: center;
+      box-shadow: 0 12px 30px rgba(0, 0, 0, 0.1);
+      animation: fadeIn 0.7s ease-in-out;
     }
 
     .signup-logo img {
-      width: 80px;
+      width: 230px; /* LOGO DIBESARKAN */
+      display: block;
       margin-bottom: 10px;
-    }
-
-    .signup-logo .brand {
-      font-size: 2rem;
-      color: #1a8b4c;
-      font-weight: bold;
+      margin-left: 120px;
+      margin-right: 10px;
     }
 
     .signup-box-msg {
-      font-size: 1.8rem;
-      font-weight: bold;
-      margin: 20px 0;
+      font-size: 1.6rem;
+      font-weight: 600;
+      margin-bottom: 25px;
+      color: #333;
     }
 
     .form-control {
-      background-color: #fff0f0;
+      background-color: #f1f8f6;
       border: none;
-      border-radius: 6px;
+      border-radius: 10px;
       height: 45px;
       width: 100%;
       margin-bottom: 15px;
       padding: 10px;
-      font-size: 14px;
+      font-size: 15px;
+      color: #333;
     }
 
     .form-control:focus {
       outline: none;
-      box-shadow: none;
+      box-shadow: 0 0 0 2px rgba(26, 139, 76, 0.2);
     }
 
     .btn-signup {
       background-color: #1a8b4c;
       border: none;
-      font-weight: bold;
+      font-weight: 600;
       height: 45px;
       width: 100%;
-      max-width: 200px;
       color: #fff;
-      border-radius: 8px;
+      border-radius: 10px;
       margin-top: 10px;
+      font-size: 16px;
       cursor: pointer;
+      transition: background 0.3s ease;
     }
 
     .btn-signup:hover {
@@ -87,7 +99,7 @@
       background-color: #ffdddd;
       color: #a94442;
       margin-bottom: 15px;
-      border-radius: 4px;
+      border-radius: 6px;
       font-size: 14px;
     }
 
@@ -95,19 +107,20 @@
       background-color: #ddffdd;
       color: #3c763d;
     }
-  </style>
 
-  <!-- Google Font: Source Sans Pro -->
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(-20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+  </style>
 </head>
 <body>
   <div class="signup-box">
     <div class="signup-logo">
-      <img src="assets/img/gas-logo.png" alt="Gasify logo"> <!-- Ganti dengan path logo -->
-      <div class="brand">Gasify</div>
+      <img src="{{ asset('admin/images/Home/logogasify.png') }}" alt="Gasify Logo">
     </div>
 
-    <p class="signup-box-msg">Sign Up</p>
+    <p class="signup-box-msg">Buat Akun Baru</p>
 
     {{-- Tampilkan pesan sukses --}}
     @if(session('success'))
@@ -127,18 +140,18 @@
       </div>
     @endif
 
-    <form action="/admin/register" method="post">
+    <form action="{{ route('user.register') }}" method="post">
       @csrf
-      <input type="text" class="form-control" placeholder="Name" name="name" value="{{ old('name') }}" required>
-      <input type="email" class="form-control" placeholder="Email address" name="email" value="{{ old('email') }}" required>
-      <input type="password" class="form-control" placeholder="Password" name="password" required>
-      <input type="password" class="form-control" placeholder="Confirm Password" name="password_confirmation" required>
+      <input type="text" class="form-control" name="name" placeholder="Nama Lengkap" value="{{ old('name') }}" required>
+      <input type="email" class="form-control" name="email" placeholder="Email address" value="{{ old('email') }}" required>
+      <input type="password" class="form-control" name="password" placeholder="Password" required>
+      <input type="password" class="form-control" name="password_confirmation" placeholder="Konfirmasi Password" required>
 
-      <button type="submit" class="btn-signup">Sign Up</button>
+      <button type="submit" class="btn-signup">Daftar</button>
     </form>
 
     <div class="text-login">
-      Already have an account? <a href="/admin/login">Login</a>
+      Sudah punya akun? <a href="{{ route('login') }}">Masuk di sini</a>
     </div>
   </div>
 </body>

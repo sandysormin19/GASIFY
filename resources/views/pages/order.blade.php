@@ -4,52 +4,52 @@
 
 @section('content')
 <div class="container py-5">
-    <h2 class="mb-4 text-center">Formulir Pemesanan Gas</h2>
+    <!-- Hero Header -->
+    <div class="text-center mb-5">
+        <h1 class="display-4 fw-bold">Form Pemesanan Gas LPG</h1>
+        <p class="lead text-muted">Pesan gas secara online dengan cepat dan praktis</p>
+    </div>
 
     @php
         $stok3kg = $stok3kg ?? 0;
         $stok12kg = $stok12kg ?? 0;
-        $harga3kg = $harga3kg ?? 0;
-        $harga12kg = $harga12kg ?? 0;
-        $alamatRumah = auth()->user()->address ?? '';
     @endphp
 
     <form method="POST" action="{{ route('order.store') }}">
         @csrf
 
-        {{-- Pilih Produk --}}
-        <div class="row mb-4">
+        <!-- Pilihan Produk -->
+        <div class="row g-4 mb-5">
             <div class="col-md-6">
-                <h5>Gas LPG 3 Kg (Stok: {{ $stok3kg }})</h5>
-                <p>Harga: <strong>Rp {{ number_format($harga3kg, 0, ',', '.') }}</strong></p>
-                <div class="input-group">
-                    <button type="button" class="btn btn-outline-secondary" onclick="changeQty('qty3kg', -1)">-</button>
-                    <input type="number" name="qty_3kg" id="qty3kg" class="form-control text-center" value="0" min="0" max="{{ $stok3kg }}">
-                    <button type="button" class="btn btn-outline-secondary" onclick="changeQty('qty3kg', 1, {{ $stok3kg }})">+</button>
+                <div class="card shadow-sm border-0 rounded-4 p-4">
+                    <h4 class="fw-bold">Gas LPG 3 Kg</h4>
+                    <p class="text-muted">Stok tersedia: {{ $stok3kg }}</p>
+                    <div class="input-group input-group-lg">
+                        <button class="btn btn-outline-secondary" type="button" onclick="changeQty('qty3kg', -1)">−</button>
+                        <input type="number" name="qty_3kg" id="qty3kg" class="form-control text-center" value="0" min="0" max="{{ $stok3kg }}">
+                        <button class="btn btn-outline-secondary" type="button" onclick="changeQty('qty3kg', 1, {{ $stok3kg }})">+</button>
+                    </div>
                 </div>
             </div>
 
             <div class="col-md-6">
-                <h5>Gas LPG 12 Kg (Stok: {{ $stok12kg }})</h5>
-                <p>Harga: <strong>Rp {{ number_format($harga12kg, 0, ',', '.') }}</strong></p>
-                <div class="input-group">
-                    <button type="button" class="btn btn-outline-secondary" onclick="changeQty('qty12kg', -1)">-</button>
-                    <input type="number" name="qty_12kg" id="qty12kg" class="form-control text-center" value="0" min="0" max="{{ $stok12kg }}">
-                    <button type="button" class="btn btn-outline-secondary" onclick="changeQty('qty12kg', 1, {{ $stok12kg }})">+</button>
+                <div class="card shadow-sm border-0 rounded-4 p-4">
+                    <h4 class="fw-bold">Gas LPG 12 Kg</h4>
+                    <p class="text-muted">Stok tersedia: {{ $stok12kg }}</p>
+                    <div class="input-group input-group-lg">
+                        <button class="btn btn-outline-secondary" type="button" onclick="changeQty('qty12kg', -1)">−</button>
+                        <input type="number" name="qty_12kg" id="qty12kg" class="form-control text-center" value="0" min="0" max="{{ $stok12kg }}">
+                        <button class="btn btn-outline-secondary" type="button" onclick="changeQty('qty12kg', 1, {{ $stok12kg }})">+</button>
+                    </div>
                 </div>
             </div>
         </div>
 
-        {{-- Estimasi Total Harga --}}
-        <div class="mb-4">
-            <h5>Total Estimasi Harga: <span id="totalHarga">Rp 0</span></h5>
-        </div>
-
-        {{-- Metode Pembayaran --}}
-        <div class="mb-4">
-            <label for="payment_method" class="form-label"><strong>Metode Pembayaran</strong></label>
-            <select class="form-select" name="payment_method" id="payment_method" required>
-                <option value="" selected disabled>Pilih metode pembayaran</option>
+        <!-- Metode Pembayaran -->
+        <div class="mb-5">
+            <label class="form-label fs-5 fw-semibold">Metode Pembayaran</label>
+            <select class="form-select form-select-lg shadow-sm" name="payment_method" required>
+                <option value="" disabled selected>Pilih metode</option>
                 <option value="gopay">GoPay</option>
                 <option value="ovo">OVO</option>
                 <option value="dana">DANA</option>
@@ -57,86 +57,50 @@
             </select>
         </div>
 
-        {{-- Alamat Pengiriman --}}
-        <div class="mb-4">
-            <label for="address_option" class="form-label"><strong>Pilih Alamat Pengiriman</strong></label>
-            <select id="address_option" class="form-select mb-3" onchange="handleAddressOption()">
-                <option value="manual">Ketik Alamat Manual</option>
-                <option value="home">Gunakan Alamat Rumah</option>
-                <option value="current">Gunakan Lokasi Saat Ini</option>
-            </select>
+        <!-- Alamat Pengiriman -->
+        <div class="mb-5">
+            <label for="address" class="form-label fs-5 fw-semibold">Alamat Pengiriman</label>
+            <textarea name="address" id="address" class="form-control form-control-lg shadow-sm" rows="4" placeholder="Masukkan alamat lengkap..." required></textarea>
 
-            <textarea name="address" id="address" class="form-control" rows="3" required placeholder="Masukkan alamat pengiriman"></textarea>
+            <!-- Tombol Lokasi -->
+            <button type="button" class="btn mt-3 border border-primary text-primary bg-white d-flex align-items-center gap-2" onclick="getCurrentLocation()">
+                <i class="bi bi-geo-alt-fill fs-5"></i>
+                Gunakan Lokasi Saat Ini
+            </button>
         </div>
 
-        <div class="text-end">
-            <button type="submit" class="btn btn-primary">Pesan Sekarang</button>
+        <!-- Tombol Submit -->
+        <div class="text-center">
+            <button type="submit" class="btn btn-success btn-lg px-5 fw-bold shadow">
+                <i class="bi bi-cart-check-fill me-2"></i>Pesan Sekarang
+            </button>
         </div>
     </form>
 </div>
 
-{{-- SCRIPT --}}
 <script>
-    const harga3kg = {{ $harga3kg }};
-    const harga12kg = {{ $harga12kg }};
-    const alamatRumah = @json($alamatRumah);
-
     function changeQty(id, delta, max = Infinity) {
-        let input = document.getElementById(id);
-        let current = parseInt(input.value) || 0;
-        let newVal = current + delta;
-        if (newVal < 0) newVal = 0;
-        if (newVal > max) newVal = max;
-        input.value = newVal;
-        updateTotalHarga();
-    }
-
-    function updateTotalHarga() {
-        const qty3kg = parseInt(document.getElementById('qty3kg').value) || 0;
-        const qty12kg = parseInt(document.getElementById('qty12kg').value) || 0;
-        const total = (qty3kg * harga3kg) + (qty12kg * harga12kg);
-        document.getElementById('totalHarga').textContent = "Rp " + total.toLocaleString('id-ID');
-    }
-
-    function handleAddressOption() {
-        const option = document.getElementById('address_option').value;
-        const addressField = document.getElementById('address');
-
-        if (option === 'home') {
-            addressField.value = alamatRumah || '';
-        } else if (option === 'current') {
-            getCurrentLocation();
-        } else {
-            addressField.value = '';
-        }
+        const input = document.getElementById(id);
+        let value = parseInt(input.value) || 0;
+        value = Math.min(Math.max(value + delta, 0), max);
+        input.value = value;
     }
 
     function getCurrentLocation() {
-        const addressField = document.getElementById('address');
-
         if (navigator.geolocation) {
-            navigator.geolocation.getCurrentPosition(function (position) {
-                const lat = position.coords.latitude;
-                const lon = position.coords.longitude;
-
-                fetch(`https://nominatim.openstreetmap.org/reverse?format=json&lat=${lat}&lon=${lon}`)
+            navigator.geolocation.getCurrentPosition(pos => {
+                const lat = pos.coords.latitude;
+                const lon = pos.coords.longitude;
+                fetch(https://nominatim.openstreetmap.org/reverse?format=json&lat=${lat}&lon=${lon})
                     .then(res => res.json())
                     .then(data => {
-                        addressField.value = data.display_name || '';
+                        document.getElementById('address').value = data.display_name;
                     })
-                    .catch(() => alert('Gagal mengambil alamat.'));
-            }, function () {
-                alert('Gagal mengakses lokasi. Pastikan izin lokasi diaktifkan.');
-            });
+                    .catch(() => alert('Gagal mengambil alamat'));
+            }, () => alert('Gagal mengambil lokasi. Periksa izin lokasi.'));
         } else {
-            alert("Geolocation tidak didukung oleh browser ini.");
+            alert('Geolocation tidak didukung browser ini.');
         }
     }
-
-    // Tambahkan event listener setelah DOM siap
-    document.addEventListener("DOMContentLoaded", function () {
-        document.getElementById('qty3kg').addEventListener('input', updateTotalHarga);
-        document.getElementById('qty12kg').addEventListener('input', updateTotalHarga);
-    });
 </script>
 @endsection

@@ -9,7 +9,7 @@
 
     <div class="row text-center mt-5 g-4">
         <div class="col-md-4">
-            <i class="fas fa-gas-pump fa-3x text-primary"></i>
+            <i class="fas fa-fire fa-3x text-primary"></i>
             <h5 class="mt-3">1. Pilih Produk</h5>
             <p>Pilih jenis tabung gas LPG yang Anda butuhkan.</p>
         </div>
