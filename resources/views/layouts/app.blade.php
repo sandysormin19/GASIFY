@@ -13,6 +13,23 @@
 
     <!-- Custom CSS (jika ada) -->
     <link rel="stylesheet" href="{{ asset('css/style.css') }}">
+
+    <style>
+        html, body {
+            height: 100%;
+            margin: 0;
+        }
+
+        body {
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        main {
+            flex: 1;
+        }
+    </style>
 </head>
 <body>
     @include('partials.navbar')
@@ -22,8 +39,8 @@
     </main>
 
     @if (!request()->is('admin/dashboard'))
-    @include('partials.footer')
-@endif
+        @include('partials.footer')
+    @endif
 
     <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
