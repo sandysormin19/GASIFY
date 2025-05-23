@@ -50,7 +50,7 @@ Route::middleware('auth')->group(function () {
 // Admin Routes
 // ==============================
 Route::prefix('/admin')->group(function () {
-    Route::match(['get', 'post'], 'dashboard', [AdminController::class, 'dashboard']);
+    Route::match(['get', 'post'], 'dashboard', [AdminController::class, 'dashboard'])->name('admin.dashboard');
     Route::match(['get', 'post'], 'login', [AdminController::class, 'login']);
      Route::post('update-stok', [AdminController::class, 'updateStok'])->name('admin.stok.update'); 
     

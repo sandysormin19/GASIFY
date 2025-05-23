@@ -23,14 +23,17 @@ class UserController extends Controller
             'password' => 'required|string|min:6|confirmed',
         ]);
 
-        $user=User::create([
+        $user = User::create([
             'name' => $request->name,
             'email' => $request->email,
             'password' => Hash::make($request->password),
+            'role' => 'user', // Set role default user
         ]);
+
         Auth::login($user);
         return redirect()->route('home');
     }
+
 
     public function showLoginForm()
     {
@@ -46,6 +49,7 @@ class UserController extends Controller
 
         if (Auth::attempt($credentials)) {
             $request->session()->regenerate();
+
             \App\Models\UserLogin::create([
                 'user_id' => Auth::id(),
                 'email' => Auth::user()->email,
@@ -53,7 +57,12 @@ class UserController extends Controller
                 'logged_in_at' => now(),
             ]);
 
-            return redirect()->route('home');
+            // Cek role dan arahkan
+            if (Auth::user()->role === 'admin') {
+                return redirect()->route('admin.dashboard'); // sesuaikan dengan route admin
+            }
+
+            return redirect()->route('home'); // default untuk user
         }
 
         return back()->withErrors([
