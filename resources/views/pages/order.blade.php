@@ -6,10 +6,12 @@
 <div class="container py-5">
     <h2 class="mb-4 text-center">Formulir Pemesanan Gas</h2>
 
-    {{-- Ambil stok dari variabel yang dikirim controller --}}
+    {{-- Ambil stok dan harga dari variabel controller --}}
     @php
         $stok3kg = $stok3kg ?? 0;
         $stok12kg = $stok12kg ?? 0;
+        $harga3kg = $harga3kg ?? 0;
+        $harga12kg = $harga12kg ?? 0;
     @endphp
 
     <form method="POST" action="{{ route('order.store') }}">
@@ -19,6 +21,7 @@
         <div class="row mb-4">
             <div class="col-md-6">
                 <h5>Gas LPG 3 Kg (Stok: {{ $stok3kg }})</h5>
+                <p>Harga: <strong>Rp {{ number_format($harga3kg, 0, ',', '.') }}</strong></p>
                 <div class="input-group">
                     <button type="button" class="btn btn-outline-secondary" onclick="changeQty('qty3kg', -1)">-</button>
                     <input type="number" name="qty_3kg" id="qty3kg" class="form-control text-center" value="0" min="0" max="{{ $stok3kg }}">
@@ -28,12 +31,18 @@
 
             <div class="col-md-6">
                 <h5>Gas LPG 12 Kg (Stok: {{ $stok12kg }})</h5>
+                <p>Harga: <strong>Rp {{ number_format($harga12kg, 0, ',', '.') }}</strong></p>
                 <div class="input-group">
                     <button type="button" class="btn btn-outline-secondary" onclick="changeQty('qty12kg', -1)">-</button>
                     <input type="number" name="qty_12kg" id="qty12kg" class="form-control text-center" value="0" min="0" max="{{ $stok12kg }}">
                     <button type="button" class="btn btn-outline-secondary" onclick="changeQty('qty12kg', 1, {{ $stok12kg }})">+</button>
                 </div>
             </div>
+        </div>
+
+        {{-- Estimasi Total Harga --}}
+        <div class="mb-4">
+            <h5>Total Estimasi Harga: <span id="totalHarga">Rp 0</span></h5>
         </div>
 
         {{-- Metode Pembayaran --}}
@@ -63,6 +72,9 @@
 
 {{-- Script Tambah/Kurang dan Lokasi --}}
 <script>
+    const harga3kg = {{ $harga3kg }};
+    const harga12kg = {{ $harga12kg }};
+
     function changeQty(id, delta, max = Infinity) {
         let input = document.getElementById(id);
         let current = parseInt(input.value) || 0;
@@ -70,7 +82,19 @@
         if (newVal < 0) newVal = 0;
         if (newVal > max) newVal = max;
         input.value = newVal;
+        updateTotalHarga();
     }
+
+    function updateTotalHarga() {
+        const qty3kg = parseInt(document.getElementById('qty3kg').value) || 0;
+        const qty12kg = parseInt(document.getElementById('qty12kg').value) || 0;
+
+        const total = (qty3kg * harga3kg) + (qty12kg * harga12kg);
+        document.getElementById('totalHarga').textContent = "Rp " + total.toLocaleString('id-ID');
+    }
+
+    document.getElementById('qty3kg').addEventListener('input', updateTotalHarga);
+    document.getElementById('qty12kg').addEventListener('input', updateTotalHarga);
 
     function getCurrentLocation() {
         if (navigator.geolocation) {

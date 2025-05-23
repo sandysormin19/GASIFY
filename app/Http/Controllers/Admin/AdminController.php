@@ -7,13 +7,19 @@ use Illuminate\Support\Facades\Hash;
 use App\Models\Admin;
 use App\Models\Stock;
 use App\Models\AdminLogin;
+use App\Models\Order;
 
 class AdminController extends Controller
 {
 
     public function dashboard()
     {
-        return view('admin.dashboard');
+        $stocks = Stock::all();
+        $totalOrders = Order::count();
+        $totalRevenue = Order::sum('total_price');
+        $orderList = Order::latest()->take(10)->get(); // 10 order terbaru
+
+        return view('admin.dashboard', compact('stocks', 'totalOrders', 'totalRevenue', 'orderList'));
     }
 
     public function login(Request $request)
@@ -31,7 +37,7 @@ class AdminController extends Controller
                     'ip_address' => $request->ip(),
                     'login_at'   => now(),
                 ]);
-                return redirect('/admin/stok');
+                return redirect('/admin/dashboard');
             }
 
             return back()->withErrors(['email' => 'Email atau password salah.']);
@@ -79,20 +85,23 @@ class AdminController extends Controller
             );
         }
 
-        $stok = Stock::all();
-        return view('admin.stok', compact('stok'));
+       // $stok = Stock::all();
+       // return view('admin.stok', compact('stok'));
     }
 
     public function updateStok(Request $request)
     {
-        foreach ($request->input('stok') as $type => $jumlah) {
+        foreach ($request->input('stok') as $type => $data) {
             Stock::updateOrCreate(
                 ['type' => $type],
-                ['quantity' => (int) $jumlah] // pastikan dikonversi ke integer
+                [
+                    'quantity' => (int) $data['quantity'],
+                    'price' => (int) $data['price']
+                ]
             );
         }
 
-        return back()->with('success', 'Stok diperbarui.');
+        return back()->with('success', 'Stok dan harga diperbarui.');
     }
 
 }

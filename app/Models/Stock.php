@@ -9,7 +9,7 @@ class Stock extends Eloquent
     protected $connection = 'mongodb';
     protected $collection = 'stocks';
 
-    protected $fillable = ['type', 'quantity'];
-
+    protected $fillable = ['type', 'quantity', 'price'];
+    
     public $timestamps = false;
 }

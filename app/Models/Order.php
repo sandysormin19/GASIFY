@@ -15,6 +15,7 @@ class Order extends Model
         'payment_method',
         'address',
         'user_id',
+        'total_price',
         'created_at'
     ];
 }

@@ -43,7 +43,7 @@ Route::middleware('auth')->group(function () {
     // Fitur Order Gas
     Route::get('/order', [OrderController::class, 'create'])->name('order.create');
     Route::post('/order', [OrderController::class, 'store'])->name('order.store');
-    Route::get('/order-history', [OrderController::class, 'history'])->name('order.history');
+    Route::get('/order-history', [OrderController::class, 'history'])->name('pages.order-history');
 });
 
 // ==============================
@@ -52,9 +52,8 @@ Route::middleware('auth')->group(function () {
 Route::prefix('/admin')->group(function () {
     Route::match(['get', 'post'], 'dashboard', [AdminController::class, 'dashboard']);
     Route::match(['get', 'post'], 'login', [AdminController::class, 'login']);
+     Route::post('update-stok', [AdminController::class, 'updateStok'])->name('admin.stok.update'); 
+    
     // Route::match(['get', 'post'], 'register', [AdminController::class, 'register']);
 });
 
-// Admin stok (bebas akses, bisa dikunci pakai middleware kalau perlu)
-Route::get('/admin/stok', [AdminController::class, 'stok'])->name('admin.stok');
-Route::post('/admin/stok/update', [AdminController::class, 'updateStok'])->name('admin.stok.update');

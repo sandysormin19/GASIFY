@@ -152,9 +152,7 @@
       <button type="submit" class="btn btn-primary">Log in</button>
     </form>
 
-    <div class="text-signup">
-      Don't have an account? <a href="/admin/register">Sign Up</a>
-    </div>
+    
   </div>
 </body>
 </html>
