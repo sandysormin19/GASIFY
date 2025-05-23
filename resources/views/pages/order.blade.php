@@ -6,12 +6,12 @@
 <div class="container py-5">
     <h2 class="mb-4 text-center">Formulir Pemesanan Gas</h2>
 
-    {{-- Ambil stok dan harga dari variabel controller --}}
     @php
         $stok3kg = $stok3kg ?? 0;
         $stok12kg = $stok12kg ?? 0;
         $harga3kg = $harga3kg ?? 0;
         $harga12kg = $harga12kg ?? 0;
+        $alamatRumah = auth()->user()->address ?? '';
     @endphp
 
     <form method="POST" action="{{ route('order.store') }}">
@@ -59,9 +59,14 @@
 
         {{-- Alamat Pengiriman --}}
         <div class="mb-4">
-            <label for="address" class="form-label"><strong>Alamat Pengiriman</strong></label>
-            <textarea name="address" id="address" class="form-control" rows="3" required></textarea>
-            <button type="button" class="btn btn-outline-primary mt-2" onclick="getCurrentLocation()">Gunakan Lokasi Saat Ini</button>
+            <label for="address_option" class="form-label"><strong>Pilih Alamat Pengiriman</strong></label>
+            <select id="address_option" class="form-select mb-3" onchange="handleAddressOption()">
+                <option value="manual">Ketik Alamat Manual</option>
+                <option value="home">Gunakan Alamat Rumah</option>
+                <option value="current">Gunakan Lokasi Saat Ini</option>
+            </select>
+
+            <textarea name="address" id="address" class="form-control" rows="3" required placeholder="Masukkan alamat pengiriman"></textarea>
         </div>
 
         <div class="text-end">
@@ -70,10 +75,11 @@
     </form>
 </div>
 
-{{-- Script Tambah/Kurang dan Lokasi --}}
+{{-- SCRIPT --}}
 <script>
     const harga3kg = {{ $harga3kg }};
     const harga12kg = {{ $harga12kg }};
+    const alamatRumah = @json($alamatRumah);
 
     function changeQty(id, delta, max = Infinity) {
         let input = document.getElementById(id);
@@ -88,15 +94,26 @@
     function updateTotalHarga() {
         const qty3kg = parseInt(document.getElementById('qty3kg').value) || 0;
         const qty12kg = parseInt(document.getElementById('qty12kg').value) || 0;
-
         const total = (qty3kg * harga3kg) + (qty12kg * harga12kg);
         document.getElementById('totalHarga').textContent = "Rp " + total.toLocaleString('id-ID');
     }
 
-    document.getElementById('qty3kg').addEventListener('input', updateTotalHarga);
-    document.getElementById('qty12kg').addEventListener('input', updateTotalHarga);
+    function handleAddressOption() {
+        const option = document.getElementById('address_option').value;
+        const addressField = document.getElementById('address');
+
+        if (option === 'home') {
+            addressField.value = alamatRumah || '';
+        } else if (option === 'current') {
+            getCurrentLocation();
+        } else {
+            addressField.value = '';
+        }
+    }
 
     function getCurrentLocation() {
+        const addressField = document.getElementById('address');
+
         if (navigator.geolocation) {
             navigator.geolocation.getCurrentPosition(function (position) {
                 const lat = position.coords.latitude;
@@ -105,13 +122,21 @@
                 fetch(`https://nominatim.openstreetmap.org/reverse?format=json&lat=${lat}&lon=${lon}`)
                     .then(res => res.json())
                     .then(data => {
-                        document.getElementById('address').value = data.display_name;
+                        addressField.value = data.display_name || '';
                     })
                     .catch(() => alert('Gagal mengambil alamat.'));
+            }, function () {
+                alert('Gagal mengakses lokasi. Pastikan izin lokasi diaktifkan.');
             });
         } else {
             alert("Geolocation tidak didukung oleh browser ini.");
         }
     }
+
+    // Tambahkan event listener setelah DOM siap
+    document.addEventListener("DOMContentLoaded", function () {
+        document.getElementById('qty3kg').addEventListener('input', updateTotalHarga);
+        document.getElementById('qty12kg').addEventListener('input', updateTotalHarga);
+    });
 </script>
 @endsection
