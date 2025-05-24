@@ -46,10 +46,10 @@ Route::middleware('auth')->group(function () {
     Route::post('/order', [OrderController::class, 'store'])->name('order.store');
 
     // ✅ Tambahan Route untuk Halaman Order History
-    Route::get('/order-history', [OrderController::class, 'history'])->name('order-history');
+    Route::get('/order-history', [OrderController::class, 'history'])->name('pages.order-history');
 
     // ✅ Tambahan Route untuk Halaman Track Courier
-    Route::get('/track-courier', [CourierController::class, 'index'])->name('track-courier');
+    Route::get('/track-courier', [CourierController::class, 'index'])->name('pages.track-courier');
 });
 
 // ==============================
