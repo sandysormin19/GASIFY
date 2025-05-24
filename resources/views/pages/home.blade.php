@@ -39,71 +39,74 @@
 
 <!-- Decorative floating shapes -->
 <div aria-hidden="true">
-<div class="floating-shape bg-green-200 w-24 h-24 top-10 left-10" style="animation-delay: 0s;"></div>
-<div class="floating-shape bg-green-300 w-32 h-32 bottom-20 right-20" style="animation-delay: 3s;"></div>
-<div class="floating-shape bg-green-100 w-16 h-16 top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2" style="animation-delay: 1.5s;"></div>
+  <div class="floating-shape bg-green-200 w-24 h-24 top-10 left-10" style="animation-delay: 0s;"></div>
+  <div class="floating-shape bg-green-300 w-32 h-32 bottom-20 right-20" style="animation-delay: 3s;"></div>
+  <div class="floating-shape bg-green-100 w-16 h-16 top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2" style="animation-delay: 1.5s;"></div>
 </div>
 
 <!-- Hero Section -->
 <section class="relative bg-gradient-to-br from-green-50 to-white py-20 px-6 md:px-16 overflow-hidden">
-<div class="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-12 relative z-10">
+  <div class="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-12 relative z-10">
     <div class="md:w-1/2 space-y-6" data-aos="fade-right">
-    <h1 class="text-4xl md:text-5xl font-extrabold text-gray-900 leading-tight">
+      <h1 class="text-4xl md:text-5xl font-extrabold text-gray-900 leading-tight">
         Pesan Gas LPG <span class="text-green-600">dengan Mudah</span>
-    </h1>
-    <p class="text-lg text-gray-600">Gasify hadir untuk kenyamanan rumah Anda. Tinggal klik, gas langsung sampai!</p>
-    <a href="{{ route('order.create') }}" class="inline-block bg-green-600 hover:bg-green-700 text-white px-6 py-3 rounded-lg shadow-lg transition duration-300">
+      </h1>
+      <p class="text-lg text-gray-600">Gasify hadir untuk kenyamanan rumah Anda. Tinggal klik, gas langsung sampai!</p>
+      <a href="{{ route('order.create') }}" class="inline-block bg-green-600 hover:bg-green-700 text-white px-6 py-3 rounded-lg shadow-lg transition duration-300">
         Pesan Sekarang
-    </a>
+      </a>
     </div>
     <div class="md:w-1/2" data-aos="fade-left">
-    <img src="{{ asset('admin/images/Home/deliverygas.jpg') }}" alt="Ilustrasi Gas" class="w-full max-w-md mx-auto rounded-xl drop-shadow-xl hover:scale-105 transition-transform duration-300 animate-wiggle" />
+      <img src="{{ asset('admin/images/Home/deliverygas.jpg') }}" alt="Ilustrasi Gas" class="w-full max-w-md mx-auto rounded-xl drop-shadow-xl hover:scale-105 transition-transform duration-300 animate-wiggle" />
     </div>
-</div>
+  </div>
 </section>
 
-<!-- Product Cards Section -->
-<section class="py-20 px-6 bg-white">
-  <div class="max-w-6xl mx-auto text-center mb-14" data-aos="fade-up">
-    <h2 class="text-3xl md:text-4xl font-bold text-gray-800">
-      Produk LPG <span class="text-green-600">Populer</span>
-    </h2>
-    <p class="text-gray-600 mt-2 max-w-xl mx-auto">
-      Pilih produk terbaik sesuai kebutuhan Anda.
-    </p>
+<!-- Produk Gas -->
+<div class="max-w-4xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-8">
+  <!-- Card Gas 3kg -->
+  <div class="bg-white p-6 rounded-xl shadow-md hover:shadow-lg transition duration-300 hover:bg-green-100 flex flex-col min-h-[500px]">
+    <div class="flex flex-col items-center text-center flex-grow">
+      <img 
+        src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRlqCveMPsWrfR_rTbhmb7da5y2SuXN8EFHzg&s" 
+        alt="Gas 3kg" 
+        class="mb-4 w-52 h-64 object-contain rounded-lg"
+      />
+      <h3 class="text-xl font-semibold text-gray-800 mb-2">Gas 3kg</h3>
+      <p class="text-gray-600 mb-4 flex-grow">
+        Cocok untuk kebutuhan rumah tangga dengan ukuran kecil.
+      </p>
+    </div>
+    <div class="text-center">
+      <span class="text-green-600 font-bold text-lg">Rp 50.000</span>
+    </div>
   </div>
 
-
- <!-- Grid dengan justifikasi tengah dan lebar maksimal dibatasi -->
-<div class="flex justify-center">
-  <div class="grid grid-cols-1 md:grid-cols-2 gap-8" data-aos="fade-up">
-    @php
-      $products = [
-        [
-          'name' => 'Layanan Instalasi Aman LPG',
-          'price' => 'Mulai dari Rp100.000',
-          'desc' => 'Jasa profesional untuk instalasi selang dan regulator LPG dengan standar keamanan tinggi.'
-        ],
-      ];
-    @endphp
-
-    @foreach ($products as $product)
-    <div class="bg-green-50 rounded-2xl p-6 shadow-md hover:shadow-xl transition duration-300 flex flex-col justify-between w-72">
-      <div class="mb-4">
-        <h3 class="text-2xl font-bold text-green-700 mb-2">{{ $product['name'] }}</h3>
-        <p class="text-gray-700">{{ $product['desc'] }}</p>
-      </div>
-      <div class="flex items-center justify-between mt-6">
-        <span class="text-xl font-semibold text-green-800">{{ $product['price'] }}</span>
-        <a href="{{ route('order.create') }}" class="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-lg shadow transition">
-          Hubungi Sekarang
-        </a>
-      </div>
+  <!-- Card Gas 12kg -->
+  <div class="bg-white p-6 rounded-xl shadow-md hover:shadow-lg transition duration-300 hover:bg-green-100 flex flex-col min-h-[500px]">
+    <div class="flex flex-col items-center text-center flex-grow">
+      <img 
+        src="https://down-id.img.susercontent.com/file/17b4028b8ad16df4747becf1958ee867" 
+        alt="Gas 12kg" 
+        class="mb-10 w-44 h-60 object-contain rounded-lg"
+      />
+      <h3 class="text-xl font-semibold text-gray-800 mb-2">Gas 12kg</h3>
+      <p class="text-gray-600 mb-4 flex-grow">
+        Produk untuk kebutuhan rumah tangga besar dan bisnis kecil.
+      </p>
     </div>
-    @endforeach
+    <div class="text-center">
+      <span class="text-green-600 font-bold text-lg">Rp 180.000</span>
+    </div>
   </div>
 </div>
-</section>
+
+
+
+
+
+
+
 
 
 <!-- Order Tools Section (Replaces Kenapa Pilih Gasify) -->
@@ -132,49 +135,80 @@
   </div>
 </section>
 
-
 <!-- FAQ Section -->
 <section class="py-20 px-6 bg-gray-50">
-<div class="max-w-6xl mx-auto text-center mb-14" data-aos="fade-up">
+  <div class="max-w-6xl mx-auto text-center mb-14" data-aos="fade-up">
     <h2 class="text-3xl md:text-4xl font-bold text-gray-800">Pertanyaan <span class="text-green-600">Umum (FAQ)</span></h2>
     <p class="text-gray-600 mt-2 max-w-xl mx-auto">Temukan jawaban atas pertanyaan yang sering diajukan.</p>
-</div>
-<div class="max-w-3xl mx-auto" data-aos="fade-up">
+  </div>
+  <div class="max-w-3xl mx-auto" data-aos="fade-up">
     <div x-data="{ openIndex: null }" class="space-y-4">
-    @php
-        $faqs = [
-        ['q' => 'Bagaimana cara memesan gas?', 'a' => 'Anda dapat memesan gas melalui tombol "Pesan Sekarang" di halaman utama, pilih produk dan isi data pengiriman.'],
-        ['q' => 'Berapa lama waktu pengiriman?', 'a' => 'Pengiriman biasanya berlangsung dalam 2-3 jam setelah konfirmasi pembayaran.'],
-        ['q' => 'Apakah pembayaran bisa dilakukan secara COD?', 'a' => 'Saat ini pembayaran dilakukan secara online melalui metode yang tersedia.'],
-        ['q' => 'Apakah gas yang dikirim aman?', 'a' => 'Kami menjamin keamanan produk dengan standar kualitas yang ketat dan pengecekan rutin.'],
-        ];
-    @endphp
-    @foreach ($faqs as $index => $faq)
-    <div>
+      @php
+          $faqs = [
+          ['q' => 'Bagaimana cara memesan gas?', 'a' => 'Anda dapat memesan gas melalui tombol "Pesan Sekarang" di halaman utama, pilih produk dan isi data pengiriman.'],
+          ['q' => 'Berapa lama waktu pengiriman?', 'a' => 'Pengiriman biasanya berlangsung dalam 2-3 jam setelah konfirmasi pembayaran.'],
+          ['q' => 'Apakah pembayaran bisa dilakukan secara COD?', 'a' => 'Saat ini pembayaran dilakukan secara online melalui metode yang tersedia.'],
+          ['q' => 'Apakah gas yang dikirim aman?', 'a' => 'Kami menjamin keamanan produk dengan standar kualitas yang ketat dan pengecekan rutin.'],
+          ];
+      @endphp
+      @foreach ($faqs as $index => $faq)
+      <div>
         <button
-        class="accordion-button w-full text-left bg-white rounded-lg p-4 shadow hover:shadow-lg focus:outline-none focus:ring-2 focus:ring-green-600"
-        @click="openIndex === {{ $index }} ? openIndex = null : openIndex = {{ $index }}">
-        <div class="flex justify-between items-center">
+          class="accordion-button w-full text-left bg-white rounded-lg p-4 shadow hover:shadow-lg focus:outline-none focus:ring-2 focus:ring-green-600"
+          @click="openIndex === {{ $index }} ? openIndex = null : openIndex = {{ $index }}">
+          <div class="flex justify-between items-center">
             <span class="font-semibold text-gray-800">{{ $faq['q'] }}</span>
             <svg
-            :class="{ 'transform rotate-180': openIndex === {{ $index }} }"
-            class="w-6 h-6 text-green-600 transition-transform duration-300"
-            fill="none" stroke="currentColor" stroke-width="2"
-            viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M19 9l-7 7-7-7"></path>
+              :class="{ 'transform rotate-180': openIndex === {{ $index }} }"
+              class="w-6 h-6 text-green-600 transition-transform duration-300"
+              fill="none" stroke="currentColor" stroke-width="2"
+              viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M19 9l-7 7-7-7"></path>
             </svg>
-        </div>
+          </div>
         </button>
         <div
-        x-show="openIndex === {{ $index }}"
-        x-transition
-        class="mt-2 px-4 text-gray-700 bg-white rounded-b-lg shadow-inner overflow-hidden">
-        {{ $faq['a'] }}
+          x-show="openIndex === {{ $index }}"
+          x-transition
+          class="mt-2 px-4 text-gray-700 bg-white rounded-b-lg shadow-inner overflow-hidden">
+          {{ $faq['a'] }}
         </div>
+      </div>
+      @endforeach
+    </div>
+  </div>
+</section>
+
+<!-- Promo Section -->
+<section class="py-20 px-6 bg-white" data-aos="fade-up">
+  <div class="max-w-6xl mx-auto text-center mb-12">
+    <h2 class="text-3xl md:text-4xl font-bold text-gray-800">Promo <span class="text-green-600">Spesial</span></h2>
+    <p class="text-gray-600 mt-2 max-w-xl mx-auto">Dapatkan penawaran menarik dan diskon terbatas dari Gasify!</p>
+  </div>
+  <div class="max-w-5xl mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+    @php
+      $promos = [
+        [
+          'title' => 'Diskon 10% untuk Pengguna Baru',
+          'desc' => 'Gunakan kode GASBARU saat checkout untuk menikmati potongan harga.',
+        ],
+        [
+          'title' => 'Gratis Ongkir untuk Pemesanan di Atas Rp150.000',
+          'desc' => 'Nikmati pengiriman gratis tanpa minimum kuota tambahan!',
+        ],
+        [
+          'title' => 'Cashback 5% untuk Pembayaran via E-Wallet',
+          'desc' => 'Bayar dengan OVO, DANA, atau GoPay dan dapatkan cashback langsung.',
+        ],
+      ];
+    @endphp
+    @foreach ($promos as $promo)
+    <div class="bg-green-50 rounded-xl p-6 shadow hover:shadow-lg transition">
+      <h3 class="text-xl font-semibold text-green-700 mb-2">{{ $promo['title'] }}</h3>
+      <p class="text-gray-700">{{ $promo['desc'] }}</p>
     </div>
     @endforeach
-    </div>
-</div>
+  </div>
 </section>
 
 <script src="https://unpkg.com/aos@2.3.4/dist/aos.js"></script>
