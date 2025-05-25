@@ -62,53 +62,6 @@
   </div>
 </section>
 
-<!-- Produk Gas -->
-<div class="max-w-4xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-8">
-  <!-- Card Gas 3kg -->
-  <div class="bg-white p-6 rounded-xl shadow-md hover:shadow-lg transition duration-300 hover:bg-green-100 flex flex-col min-h-[500px]">
-    <div class="flex flex-col items-center text-center flex-grow">
-      <img 
-        src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRlqCveMPsWrfR_rTbhmb7da5y2SuXN8EFHzg&s" 
-        alt="Gas 3kg" 
-        class="mb-4 w-52 h-64 object-contain rounded-lg"
-      />
-      <h3 class="text-xl font-semibold text-gray-800 mb-2">Gas 3kg</h3>
-      <p class="text-gray-600 mb-4 flex-grow">
-        Cocok untuk kebutuhan rumah tangga dengan ukuran kecil.
-      </p>
-    </div>
-    <div class="text-center">
-      <span class="text-green-600 font-bold text-lg">Rp 50.000</span>
-    </div>
-  </div>
-
-  <!-- Card Gas 12kg -->
-  <div class="bg-white p-6 rounded-xl shadow-md hover:shadow-lg transition duration-300 hover:bg-green-100 flex flex-col min-h-[500px]">
-    <div class="flex flex-col items-center text-center flex-grow">
-      <img 
-        src="https://down-id.img.susercontent.com/file/17b4028b8ad16df4747becf1958ee867" 
-        alt="Gas 12kg" 
-        class="mb-10 w-44 h-60 object-contain rounded-lg"
-      />
-      <h3 class="text-xl font-semibold text-gray-800 mb-2">Gas 12kg</h3>
-      <p class="text-gray-600 mb-4 flex-grow">
-        Produk untuk kebutuhan rumah tangga besar dan bisnis kecil.
-      </p>
-    </div>
-    <div class="text-center">
-      <span class="text-green-600 font-bold text-lg">Rp 180.000</span>
-    </div>
-  </div>
-</div>
-
-
-
-
-
-
-
-
-
 <!-- Order Tools Section (Replaces Kenapa Pilih Gasify) -->
 <section class="py-20 px-6 bg-green-50" data-aos="fade-up">
   <div class="max-w-6xl mx-auto text-center mb-14">
