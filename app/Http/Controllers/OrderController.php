@@ -36,6 +36,9 @@ public function history()
             'qty_12kg' => 'required|integer|min:0',
             'payment_method' => 'required',
             'address' => 'required|string|max:255',
+            'delivery_lat' => 'required|numeric',
+            'delivery_lng' => 'required|numeric',
+
         ]);
 
         if ($request->qty_3kg == 0 && $request->qty_12kg == 0) {
@@ -72,6 +75,11 @@ public function history()
             'address' => $request->address,
             'total_price' => $total_price,
             'created_at' => now(),
+            //Punya kurir
+            'courier_id' => 1,
+            // Lokasi pengiriman
+            'delivery_lat' => $request->delivery_lat,
+            'delivery_lng' => $request->delivery_lng,
         ]);
 
         // TODO: Notifikasi ke admin

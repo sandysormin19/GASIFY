@@ -4,7 +4,8 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\AdminController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\OrderController;
-use App\Http\Controllers\CourierController;  // Import CourierController
+use App\Http\Controllers\CourierLocationController;
+
 
 // ==============================
 // Halaman Umum
@@ -49,8 +50,12 @@ Route::middleware('auth')->group(function () {
     Route::get('/order-history', [OrderController::class, 'history'])->name('pages.order-history');
 
     // ✅ Tambahan Route untuk Halaman Track Courier
-    Route::get('/track-courier', [CourierController::class, 'index'])->name('pages.track-courier');
+   // Route::get('/track-courier', [CourierController::class, 'index'])->name('pages.track-courier');
 });
+
+Route::post('/api/courier-location', [CourierLocationController::class, 'updateLocation']);
+Route::get('/api/courier-location/{orderId}', [CourierLocationController::class, 'getLocationByOrder']);
+
 
 // ==============================
 // Admin Routes
@@ -58,7 +63,7 @@ Route::middleware('auth')->group(function () {
 Route::prefix('/admin')->group(function () {
     Route::match(['get', 'post'], 'dashboard', [AdminController::class, 'dashboard'])->name('admin.dashboard');
     Route::match(['get', 'post'], 'login', [AdminController::class, 'login']);
-    Route::post('update-stok', [AdminController::class, 'updateStok'])->name('admin.stok.update'); 
-    
+    Route::post('update-stok', [AdminController::class, 'updateStok'])->name('admin.stok.update');
+
     // Route::match(['get', 'post'], 'register', [AdminController::class, 'register']);
 });

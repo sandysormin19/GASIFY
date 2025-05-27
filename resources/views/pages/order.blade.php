@@ -78,6 +78,8 @@
             <button type="button" class="btn btn-outline-info mt-2" onclick="getCurrentLocation()">
                 <i class="bi bi-geo-alt"></i> Gunakan Lokasi Saat Ini
             </button>
+            <input type="hidden" name="delivery_lat" id="lat_user">
+            <input type="hidden" name="delivery_lng" id="lng_user">
         </div>
 
         {{-- Tombol Submit --}}
@@ -117,6 +119,7 @@
     }
 
     function getCurrentLocation() {
+
         if (navigator.geolocation) {
             navigator.geolocation.getCurrentPosition(function (position) {
                 const lat = position.coords.latitude;
@@ -126,6 +129,9 @@
                     .then(res => res.json())
                     .then(data => {
                         document.getElementById('address').value = data.display_name;
+                        document.getElementById('lat_user').value = lat;
+                        document.getElementById('lng_user').value = lon;
+
                     })
                     .catch(() => alert('Gagal mengambil alamat.'));
             });

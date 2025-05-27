@@ -78,13 +78,7 @@
       <p class="text-gray-600">Cek riwayat pemesanan Anda secara praktis & detail.</p>
     </a>
     <!-- Track Courier -->
-    <a href="{{ route('pages.track-courier') }}" class="block bg-white p-6 rounded-xl shadow-md hover:shadow-lg transition duration-300 text-center hover:bg-green-100">
-      <svg xmlns="http://www.w3.org/2000/svg" class="w-16 h-16 mx-auto mb-4 text-green-600 animate-bounce" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 2c2.21 0 4 1.79 4 4 0 3.53-4 8-4 8s-4-4.47-4-8c0-2.21 1.79-4 4-4zM12 12a2 2 0 100-4 2 2 0 000 4zm0 10c-4.418 0-8-1.79-8-4v-1c0-.552.448-1 1-1h14c.552 0 1 .448 1 1v1c0 2.21-3.582 4-8 4z"/>
-      </svg>
-      <h3 class="text-xl font-semibold mb-2 text-gray-800">Lacak Kurir</h3>
-      <p class="text-gray-600">Lihat posisi kurir Anda secara real-time dan akurat.</p>
-    </a>
+    
   </div>
 </section>
 
