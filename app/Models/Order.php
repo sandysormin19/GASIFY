@@ -10,9 +10,10 @@ class Order extends Model
     protected $collection = 'orders';
 
     protected $fillable = [
+        'order_number',
         'qty_3kg',
         'qty_12kg',
-        'payment_method',
+        'phone_number',
         'address',
         'user_id',
         'total_price',
@@ -21,6 +22,8 @@ class Order extends Model
         'courier_location', // tambahkan ini supaya bisa mass assign kalau perlu
         'delivery_lat',
         'delivery_lng',
+        'payment_status',
+
     ];
 
     protected $casts = [

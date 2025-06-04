@@ -9,6 +9,7 @@ use App\Http\Controllers\Admin\HomepageContentController; // <-- Tambahkan ini
 use App\Models\HomepageContent; // <-- Tambahkan ini untuk mengambil data di route '/'
 use App\Models\Stock;
 
+
 Route::get('/', function () {
     // Ambil data dari HomepageContent untuk ditampilkan di home
     $hero = HomepageContent::where('section', 'hero')->where('is_active', true)->first();
@@ -77,12 +78,13 @@ Route::middleware('auth')->group(function () {
     Route::get('/order', [OrderController::class, 'create'])->name('order.create');
     Route::post('/order', [OrderController::class, 'store'])->name('order.store');
 
-    // ✅ Tambahan Route untuk Halaman Order History
+    // Tambahan Route untuk Halaman Order History
     Route::get('/order-history', [OrderController::class, 'history'])->name('pages.order-history');
 
-    // ✅ Tambahan Route untuk Halaman Track Courier
+    // Tambahan Route untuk Halaman Track Courier
    // Route::get('/track-courier', [CourierController::class, 'index'])->name('pages.track-courier');
 });
+
 
 Route::post('/api/courier-location', [CourierLocationController::class, 'updateLocation']);
 Route::get('/api/courier-location/{orderId}', [CourierLocationController::class, 'getLocationByOrder']);
@@ -109,3 +111,5 @@ Route::prefix('admin')->name('admin.')->group(function () {
 
     // Route::match(['get', 'post'], 'register', [AdminController::class, 'register']); // Biasanya admin tidak register sendiri
 });
+
+Route::get('/checkout/{orderId}', [OrderController::class, 'checkout'])->name('order.checkout');

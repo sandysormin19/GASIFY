@@ -8,6 +8,14 @@ use App\Models\Stock;
 
 class OrderController extends Controller
 {
+    public function checkout($orderId)
+    {
+        $order = Order::where('_id', $orderId)->where('user_id', auth()->id())->firstOrFail();
+
+        return view('pages.checkout', [
+            'snapToken' => $order->snap_token
+        ]);
+    }
     public function create()
     {
         $stok3kg = Stock::where('type', '3kg')->first();
@@ -34,7 +42,7 @@ public function history()
         $request->validate([
             'qty_3kg' => 'required|integer|min:0',
             'qty_12kg' => 'required|integer|min:0',
-            'payment_method' => 'required',
+            'phone_number' => 'required|string|max:15',
             'address' => 'required|string|max:255',
             'delivery_lat' => 'required|numeric',
             'delivery_lng' => 'required|numeric',
@@ -67,11 +75,12 @@ public function history()
             $stok12kg->decrement('quantity', $request->qty_12kg);
         }
 
-        Order::create([
+      $order =  Order::create([
             'user_id' => auth()->id(),
+            'order_number' => 'ORD-' . strtoupper(uniqid()),
             'qty_3kg' => $request->qty_3kg,
             'qty_12kg' => $request->qty_12kg,
-            'payment_method' => $request->payment_method,
+            'phone_number' => $request->phone_number,
             'address' => $request->address,
             'total_price' => $total_price,
             'created_at' => now(),
@@ -80,10 +89,35 @@ public function history()
             // Lokasi pengiriman
             'delivery_lat' => $request->delivery_lat,
             'delivery_lng' => $request->delivery_lng,
+            'payment_status' => 'paid',
         ]);
+                // Set up Midtrans configuration
+          \Midtrans\Config::$serverKey = 'SB-Mid-server-yic6Mo0_JVykupsMYm9Mo3mT';
+          \Midtrans\Config::$clientKey = 'SB-Mid-client-06O2KMZui7WkqN23';
+          \Midtrans\Config::$isProduction = false;
+          \Midtrans\Config::$isSanitized = true;
+          \Midtrans\Config::$is3ds = true;
+          // Gunakan URL aplikasi Anda sendiri untuk callback
+          \Midtrans\Config::$appendNotifUrl = url('/api/midtrans/notification');
+          \Midtrans\Config::$overrideNotifUrl = url('/api/midtrans/notification');
 
+          $params = [
+            'transaction_details' => [
+                'order_id' => $order->order_number,
+                'gross_amount' => $total_price,
+            ],
+            'enabled_payments' => ['gopay', 'qris', 'bank_transfer'],
+        ];
+        try {
+            $snapToken = \Midtrans\Snap::getSnapToken($params);
+        } catch (\Exception $e) {
+            return back()->withErrors(['message' => 'Midtrans error: ' . $e->getMessage()]);
+        }
+
+        $order->snap_token = $snapToken;
+        $order->save();
         // TODO: Notifikasi ke admin
-
-        return redirect()->route('pages.order-history')->with('success', 'Pesanan berhasil!');
+        return redirect()->route('order.checkout', $order->_id);
+        //return redirect()->route('pages.order-history')->with('success', 'Pesanan berhasil!');
     }
 }

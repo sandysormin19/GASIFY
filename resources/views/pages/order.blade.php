@@ -77,16 +77,10 @@
             </div>
         </div>
 
-        {{-- Metode Pembayaran --}}
+        {{-- Nomor Telepon --}}
         <div class="mb-4">
-            <label for="payment_method" class="form-label fw-semibold">Metode Pembayaran</label>
-            <select class="form-select" name="payment_method" id="payment_method" required>
-                <option value="" disabled selected>-- Pilih metode --</option>
-                <option value="gopay">GoPay</option>
-                <option value="ovo">OVO</option>
-                <option value="dana">DANA</option>
-                <option value="shopeepay">ShopeePay</option>
-            </select>
+            <label for="phone_number" class="form-label fw-semibold">Nomor Telepon</label>
+            <input type="text" class="form-control" name="phone_number" id="phone_number" required placeholder="Contoh: 08123456789">
         </div>
         
     <div class="container py-5">

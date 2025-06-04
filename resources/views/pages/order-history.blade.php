@@ -25,8 +25,9 @@
                         <th>Tanggal</th>
                         <th>3 Kg</th>
                         <th>12 Kg</th>
-                        <th>Metode</th>
+                        <th>Nomor Telepon</th>
                         <th>Alamat Pengiriman</th>
+                        <th>Status Pembayaran</th>
                         <th>Lacak</th>
                     </tr>
                 </thead>
@@ -38,9 +39,22 @@
                         <td class="text-center">{{ $order->qty_3kg }} tabung</td>
                         <td class="text-center">{{ $order->qty_12kg }} tabung</td>
                         <td class="text-center">
-                            <span class="badge bg-secondary text-uppercase">{{ $order->payment_method }}</span>
+                            <span class="badge bg-secondary text-uppercase">{{ $order->phone_number }}</span>
                         </td>
                         <td>{{ $order->address }}</td>
+                        <td class="text-center">
+                            @php
+                                $status = $order->payment_status ?? 'paid';
+                                $badgeClass = match($status) {
+                                    'settlement', 'capture' => 'success',
+                                    'pending' => 'warning',
+                                    'deny', 'cancel', 'expire' => 'danger',
+                                    'challenge' => 'info',
+                                    default => 'secondary',
+                                };
+                            @endphp
+                            <span class="badge bg-{{ $badgeClass }} text-uppercase">{{ $status }}</span>
+                        </td>
                         <td class="text-center">
                             <button class="btn btn-primary btn-sm" onclick="trackCourier('{{ $order->_id }}')">Lacak Kurir</button>
                         </td>
