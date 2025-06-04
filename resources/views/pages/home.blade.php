@@ -62,6 +62,66 @@
 </section>
 @endif
 
+@if(isset($priceCatalogStocks) && $priceCatalogStocks->isNotEmpty())
+<section class="py-16 px-6 bg-gray-50" data-aos="fade-up">
+  <div class="max-w-6xl mx-auto text-center mb-12">
+    <h2 class="text-3xl md:text-4xl font-bold text-gray-800">
+      Katalog <span class="text-green-600">Harga Gas</span> Kami
+    </h2>
+    <p class="text-gray-600 mt-3 max-w-xl mx-auto">
+      Temukan harga terbaik untuk kebutuhan gas LPG Anda. Harga dapat berubah sewaktu-waktu.
+    </p>
+  </div>
+
+  {{-- TAMBAHKAN BLOK PHP UNTUK SORTING DI SINI --}}
+  @php
+    // Urutkan $priceCatalogStocks: 3kg dulu, lalu 12kg, lalu sisanya
+    // Asumsi $stock->type adalah string seperti '3kg', '12kg'
+    // Jika $stock->type adalah angka (misal 3, 12), sesuaikan logikanya
+    $sortedStocks = $priceCatalogStocks->sortBy(function ($stock) {
+        $type = strtolower(str_replace(' ', '', $stock->type)); // Normalisasi tipe: '3kg', '12kg'
+        if ($type == '3kg') {
+            return 0; // Urutan pertama
+        } elseif ($type == '12kg') {
+            return 1; // Urutan kedua
+        } else {
+            // Untuk tipe lain, bisa diurutkan berdasarkan nama tipe atau biarkan apa adanya
+            // Misalnya, urutkan berdasarkan angka di tipe jika ada, atau abjad
+            preg_match('/(\d+)/', $type, $matches);
+            if (isset($matches[1])) {
+                return 20 + (int)$matches[1]; // Beri bobot agar setelah 3kg dan 12kg
+            }
+            return 100; // Default untuk yang tidak cocok pola
+        }
+    });
+  @endphp
+
+  {{-- Gunakan $sortedStocks dalam loop --}}
+  <div class="max-w-5xl mx-auto grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+    @foreach ($sortedStocks as $stock) {{-- <--- UBAH KE $sortedStocks --}}
+    <div class="bg-white rounded-xl p-6 shadow-lg hover:shadow-2xl transition-shadow duration-300 flex flex-col items-center text-center transform hover:-translate-y-1">
+      <div class="bg-green-100 p-4 rounded-full mb-4">
+        <svg class="w-10 h-10 text-green-600" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M7 2a1 1 0 00-.707 1.707L7 4.414v3.272a1 1 0 102 0V4.414l.707-.707A1 1 0 009 2H7zm0 0a1 1 0 00-1 1v.083c.09.032.178.074.26.125A1.001 1.001 0 007 15.5V16a1 1 0 102 0v-.5c0-.398-.236-.766-.607-.917A2.001 2.001 0 017 3.083V3a1 1 0 000-1zm4 0a1 1 0 00-1 1v.083c.09.032.178.074.26.125A1.001 1.001 0 0011 15.5V16a1 1 0 102 0v-.5c0-.398-.236-.766-.607-.917A2.001 2.001 0 0111 3.083V3a1 1 0 000-1zM5.05 8.05a1 1 0 10-1.414 1.414L2.293 10l1.343.657a1 1 0 001.414-1.414L3.707 8.5l1.343-.45zm9.9 0a1 1 0 00-1.414-.45L12.293 8.5l1.343.45a1 1 0 101.414-1.414L13.707 10l1.343-.657z" clip-rule="evenodd"></path><path d="M10 18a8 8 0 100-16 8 8 0 000 16zm0 2a10 10 0 100-20 10 10 0 000 20z"></path></svg>
+      </div>
+      <h3 class="text-xl font-semibold text-green-700 mb-2">
+        Gas LPG {{ $stock->type }}
+      </h3>
+      <p class="text-3xl font-extrabold text-gray-900 mb-1">
+        Rp {{ number_format($stock->price, 0, ',', '.') }}
+      </p>
+      <p class="text-sm text-gray-500 mb-4">
+        Per Tabung
+      </p>
+      <a href="{{ route('order.create') }}?type={{ $stock->type }}"
+         class="mt-auto inline-block bg-green-600 hover:bg-green-700 text-white font-medium px-6 py-2.5 rounded-lg shadow-md hover:shadow-lg transition duration-300 ease-in-out">
+        Pesan Sekarang
+      </a>
+    </div>
+    @endforeach
+  </div>
+</section>
+@endif
+
 @if($orderToolsTitle && $orderToolsTitle->is_active && isset($orderToolsTitle->content))
 <section class="py-20 px-6 bg-green-50" data-aos="fade-up">
   <div class="max-w-6xl mx-auto text-center mb-14">

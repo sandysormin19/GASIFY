@@ -7,10 +7,8 @@ use App\Http\Controllers\OrderController;
 use App\Http\Controllers\CourierLocationController;
 use App\Http\Controllers\Admin\HomepageContentController; // <-- Tambahkan ini
 use App\Models\HomepageContent; // <-- Tambahkan ini untuk mengambil data di route '/'
+use App\Models\Stock;
 
-// ==============================
-// Halaman Umum
-// ==============================
 Route::get('/', function () {
     // Ambil data dari HomepageContent untuk ditampilkan di home
     $hero = HomepageContent::where('section', 'hero')->where('is_active', true)->first();
@@ -21,6 +19,13 @@ Route::get('/', function () {
     $faqsData = HomepageContent::where('section', 'faqs')->where('is_active', true)->first();
     $promoTitle = HomepageContent::where('section', 'promo_title')->where('is_active', true)->first();
     $promosData = HomepageContent::where('section', 'promos')->where('is_active', true)->first();
+
+    // BARU: Ambil data stok untuk katalog harga
+    // Ambil semua stok yang mungkin memiliki harga > 0 dan aktif (jika ada field is_active di Stok)
+    // Urutkan berdasarkan tipe atau kriteria lain jika perlu
+    $priceCatalogStocks = Stock::where('price', '>', 0) // Hanya tampilkan yang harganya sudah di-set
+                                ->orderBy('type') // Urutkan misal berdasarkan tipe ('12kg', '3kg', '5.5kg')
+                                ->get();
 
     // Sediakan nilai default jika data null untuk menghindari error di view
     $defaultContent = ['title' => '', 'subtitle' => '', 'button_text' => '', 'button_url' => '', 'image_url' => ''];
@@ -36,6 +41,7 @@ Route::get('/', function () {
         'faqsData' => $faqsData ?? (object)['is_active' => false, 'content' => $defaultFaqPromoContent],
         'promoTitle' => $promoTitle ?? (object)['is_active' => false, 'content' => $defaultContent],
         'promosData' => $promosData ?? (object)['is_active' => false, 'content' => $defaultFaqPromoContent],
+        'priceCatalogStocks' => $priceCatalogStocks, // <-- KIRIM DATA STOK KE VIEW
     ]);
 })->name('home');
 
